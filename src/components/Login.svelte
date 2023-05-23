@@ -10,19 +10,31 @@
 
   const handleLogin = async () => {
     console.log("Login");
-    const response = await fetch(
-      "https://klockworks.direct.quickconnect.to:3175/webapi/query.cgi?",
-      {
-        method: "GET",
-        timeout: 3000,
-        headers: {
-          api: "SYNO.API.Info",
-          version: "1",
-          method: "query",
-          query: "SYNO.API.FileStation",
-        },
-      }
-    )
+
+    // let params = {
+    //   api: "SYNO.API.Info",
+    //   version: "1",
+    //   method: "query",
+    //   query: "SYNO.API.FileStation",
+    // };
+
+    let params = [
+      "api=SYNO.API.Info",
+      "version=1",
+      "method=query",
+      " query=SYNO.FileStation",
+    ];
+
+    let url =
+      "https://klockworks.direct.quickconnect.to:3175/webapi/query.cgi?";
+
+    let combinedParams = params.join("&");
+    let combinedUrl = url + combinedParams;
+
+    const response = await fetch(combinedUrl, {
+      method: "GET",
+      timeout: 3000,
+    })
       .then((response) => console.log(response))
       .catch((error) => console.log(error));
 
