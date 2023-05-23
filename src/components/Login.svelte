@@ -1,8 +1,31 @@
 <script lang="ts">
+  import { fetch } from "@tauri-apps/api/http";
+
   let authenticated = false;
 
-  const handleLogin = () => {
+  // let username: string;
+  // let password: string;
+  // let session: string;
+  // let otp_code: string;
+
+  const handleLogin = async () => {
     console.log("Login");
+    const response = await fetch(
+      "https://klockworks.direct.quickconnect.to:3175/webapi/query.cgi?",
+      {
+        method: "GET",
+        timeout: 3000,
+        headers: {
+          api: "SYNO.API.Info",
+          version: "1",
+          method: "query",
+          query: "SYNO.API.FileStation",
+        },
+      }
+    )
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+
     authenticated = true;
   };
 

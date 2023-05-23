@@ -16,6 +16,10 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "http": {
+        "request": true,
+        "scope": ["https://klockworks.direct.quickconnect.to:3175/webapi/*"]
       }
     },
     "bundle": {

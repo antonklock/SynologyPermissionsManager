@@ -8,10 +8,6 @@
 </main>
 
 <style>
-  h1 {
-    margin-bottom: 0px;
-  }
-
   .container {
     display: flex;
     flex-direction: column;
