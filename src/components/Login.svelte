@@ -1,5 +1,6 @@
 <script lang="ts">
   import { fetch } from "@tauri-apps/api/http";
+  import { v4 as uuidv4 } from "uuid";
 
   let authenticated = false;
   let loginFailed = false;
@@ -9,6 +10,11 @@
   let password: string;
   let session: string;
   let otp_code: string;
+  let enable_syno_token: "yes" | "no" = "yes";
+
+  let did: string;
+  let sid: string;
+  let synotoken: string;
 
   let url = "https://klockworks.direct.quickconnect.to:3175/webapi/auth.cgi?";
 
@@ -21,6 +27,12 @@
   interface AuthResponse {
     data: {
       success: boolean;
+      data: {
+        did: string;
+        sid: string;
+        synotoken: string;
+        is_portal_port: boolean;
+      };
     };
   }
 
@@ -29,7 +41,7 @@
     password: string,
     session: string,
     otp_code: string
-  ): Promise<AuthResponse | void> => {
+  ): Promise<AuthResponse> => {
     let combinedUrl = buildUrl(
       [
         "api=SYNO.API.Auth",
@@ -37,21 +49,33 @@
         "method=login",
         "account=" + username,
         "passwd=" + password,
-        "session=" + session,
+        // "session=" + session,
         "format=sid ",
         "otp_code=" + otp_code,
+        "enable_syno_token=" + enable_syno_token,
       ],
       url
     );
 
     console.log("combinedUrl: " + combinedUrl);
 
-    const response: AuthResponse | void = await fetch(combinedUrl, {
+    const response: AuthResponse = await fetch(combinedUrl, {
       method: "GET",
       timeout: 5000,
     })
-      .then((res) => res as AuthResponse)
-      .catch((error) => console.log("Error: " + error));
+      .then((res) => {
+        // getFileStationList();
+        return res as AuthResponse;
+      })
+      .catch((error) => {
+        console.log("Error: " + error);
+        return response as AuthResponse;
+      });
+
+    console.log("Success: " + response.data.success);
+    console.log("did: " + response.data.data.did);
+    console.log("sid: " + response.data.data.sid);
+    console.log("synotoken: " + response.data.data.synotoken);
 
     console.log(response);
     validateAuthResponse(response as AuthResponse);
@@ -62,67 +86,95 @@
     if (response.data.success == true) {
       authenticated = true;
       loginFailed = false;
+      enterOtp = false;
+
+      getFileStationList();
     } else {
       authenticated = false;
       loginFailed = true;
+      enterOtp = false;
     }
   };
 
-  const requestSynoApiInfo = async () => {
+  const getFileStationList = async () => {
     let combinedUrl = buildUrl(
       [
-        "api=SYNO.API.Info",
+        "api=SYNO.FileStation.List",
         "version=1",
-        "method=query",
-        " query=SYNO.FileStation",
+        "method=list_share",
+        "synotoken=" + synotoken,
       ],
       url
     );
 
-    const response = await fetch(combinedUrl, {
+    let response: AuthResponse;
+
+    response = await fetch(combinedUrl, {
       method: "GET",
       timeout: 3000,
     })
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+      .then((response) => {
+        console.log("combinedUrl: " + combinedUrl);
+        console.log("Success!");
+        console.log(response);
+        return response as AuthResponse;
+      })
+      .catch((error) => {
+        console.log("combinedUrl: " + combinedUrl);
+        console.log("Fail!");
+        console.log(error);
+        return response as AuthResponse;
+      });
+
+    if (response.data.success == true) {
+      console.log("success");
+    }
   };
 
   const requestLogout = async () => {
     let combinedUrl = buildUrl(
       [
         "api=SYNO.API.Auth",
-        "version=3",
+        "version=2",
         "method=logout",
         "account=" + username,
-        // `session=${session}`,
       ],
       url
     );
 
-    const response = await fetch(combinedUrl, {
+    let response: AuthResponse;
+
+    response = await fetch(combinedUrl, {
       method: "GET",
       timeout: 3000,
     })
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+      .then((response) => {
+        console.log(response);
+        return response as AuthResponse;
+      })
+      .catch((error) => {
+        console.log(error);
+        return response as AuthResponse;
+      });
 
-    //@ts-ignore
-    if (response.success == true) {
+    if (response.data.success == true) {
       authenticated = false;
       loginFailed = false;
+      enterOtp = false;
     }
   };
 
   const setEnterOtp = (enterOtpNewValue: boolean) => {
     console.log("Enter OTP: " + enterOtpNewValue);
+    console.log("username: " + username);
+    console.log("password: " + password);
     enterOtp = enterOtpNewValue;
   };
 
   const handleLogin = async () => {
     console.log("Login");
-    // requestSynoApiInfo();
-    requestAuth(username, password, "new-session", otp_code);
-    // authenticated = true;
+    session = uuidv4();
+    requestAuth(username, password, session, otp_code);
   };
 
   const handleLogout = () => {
@@ -194,7 +246,6 @@
     align-items: center;
   }
   button {
-    /* border-color: rgb(24, 142, 24); */
     min-width: 8rem;
   }
 </style>
