@@ -3,6 +3,7 @@
 
   let authenticated = false;
   let loginFailed = false;
+  let enterOtp = false;
 
   let username: string;
   let password: string;
@@ -112,10 +113,15 @@
     }
   };
 
+  const setEnterOtp = (enterOtpNewValue: boolean) => {
+    console.log("Enter OTP: " + enterOtpNewValue);
+    enterOtp = enterOtpNewValue;
+  };
+
   const handleLogin = async () => {
     console.log("Login");
     // requestSynoApiInfo();
-    requestAuth(username, password, session, otp_code);
+    requestAuth(username, password, "new-session", otp_code);
     // authenticated = true;
   };
 
@@ -126,7 +132,7 @@
 </script>
 
 <div class="container">
-  {#if authenticated == false}
+  {#if authenticated == false && enterOtp == false}
     <h1>Login</h1>
     {#if loginFailed == true}
       <p style={"text-color: red"}>Login failed. Please try again.</p>
@@ -144,20 +150,10 @@
         placeholder="password"
         bind:value={password}
       />
-      <input
-        type="text"
-        name="session name"
-        placeholder="session"
-        bind:value={session}
-      />
-      <input
-        type="text"
-        name="otp_code"
-        placeholder="otp"
-        bind:value={otp_code}
-      />
     </form>
-    <button class={"loginButton"} on:click={handleLogin}>Login</button>
+    <button class={"loginButton"} on:click={() => setEnterOtp(true)}
+      >Next</button
+    >
   {:else if authenticated == true && loginFailed == false}
     <h1>Logout</h1>
     <button on:click={handleLogout}>Logout</button>
@@ -166,6 +162,17 @@
     >
       Login Successful
     </p>
+  {:else if enterOtp == true}
+    <h1>Login</h1>
+    <input
+      type="text"
+      name="otp_code"
+      placeholder="otp"
+      bind:value={otp_code}
+    />
+
+    <button style={"margin-bottom: 8rem"} on:click={handleLogin}>Login </button>
+    <button on:click={() => setEnterOtp(false)}>Back</button>
   {/if}
 </div>
 
@@ -176,7 +183,7 @@
     align-items: center;
   }
   .form input {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
   .loginButton {
     width: 20%;
@@ -185,5 +192,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  button {
+    /* border-color: rgb(24, 142, 24); */
+    min-width: 8rem;
   }
 </style>
