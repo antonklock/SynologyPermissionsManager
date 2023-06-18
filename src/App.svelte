@@ -2,11 +2,16 @@
   import Greet from "./lib/Greet.svelte";
   import Login from "./components/login/Login.svelte";
   import Permissions from "./components/views/permissions/Permissions.svelte";
+
+  let isLoggedIn = true;
 </script>
 
 <main class="container">
-  <!-- <Login /> -->
-  <Permissions />
+  {#if isLoggedIn}
+    <Permissions />
+  {:else}
+    <Login />
+  {/if}
 </main>
 
 <style>
