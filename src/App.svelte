@@ -1,10 +1,12 @@
 <script lang="ts">
   import Greet from "./lib/Greet.svelte";
-  import Login from "./components/Login.svelte";
+  import Login from "./components/login/Login.svelte";
+  import Permissions from "./components/views/permissions/Permissions.svelte";
 </script>
 
 <main class="container">
-  <Login />
+  <!-- <Login /> -->
+  <Permissions />
 </main>
 
 <style>

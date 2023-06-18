@@ -49,7 +49,6 @@
         "method=login",
         "account=" + username,
         "passwd=" + password,
-        // "session=" + session,
         "format=sid ",
         "otp_code=" + otp_code,
         "enable_syno_token=" + enable_syno_token,
@@ -107,22 +106,24 @@
       url
     );
 
-    let response: AuthResponse;
+    let response: AuthResponse | null = null;
 
     response = await fetch(combinedUrl, {
       method: "GET",
       timeout: 3000,
     })
-      .then((response) => {
+      .then((res) => {
         console.log("combinedUrl: " + combinedUrl);
         console.log("Success!");
-        console.log(response);
-        return response as AuthResponse;
+        console.log(res);
+
+        return null;
       })
       .catch((error) => {
         console.log("combinedUrl: " + combinedUrl);
         console.log("Fail!");
         console.log(error);
+
         return response as AuthResponse;
       });
 
@@ -142,7 +143,7 @@
       url
     );
 
-    let response: AuthResponse;
+    let response: AuthResponse | null = null;
 
     response = await fetch(combinedUrl, {
       method: "GET",
