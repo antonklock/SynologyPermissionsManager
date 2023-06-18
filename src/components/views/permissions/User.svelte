@@ -19,8 +19,6 @@
   const toggleShowInfo = () => {
     showInfo = !showInfo;
   };
-
-  const getFoldersWithPermission = () => {};
 </script>
 
 <div>

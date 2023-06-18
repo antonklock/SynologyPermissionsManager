@@ -3,28 +3,28 @@
   "children": [
     {
       "name": "folder1",
-      "src": "/path/path/path",
+      "src": "/root/folder1",
       "accountsWithPermission": ["klock"],
       "children": [
         {
           "name": "folder2",
-          "src": "/path/path/path",
+          "src": "/root/folder1/folder2",
           "accountsWithPermission": ["klock"],
           "children": [
             {
               "name": "folder3",
-              "src": "/path/path/path",
+              "src": "/root/folder1/folder2/folder3",
               "accountsWithPermission": ["klock"]
             }
           ]
         },
         {
           "name": "folder4",
-          "src": "/path/path/path",
+          "src": "/root/folder1/folder4",
           "accountsWithPermission": ["klock", "pellebos", "klocken"],
           "children": {
             "name": "folder5",
-            "src": "/path/path/path",
+            "src": "/root/folder1/folder4/folder5",
             "accountsWithPermission": ["klock", "pellebos", "klocken"]
           }
         }
@@ -32,17 +32,17 @@
     },
     {
       "name": "folder6",
-      "src": "/path/path/path",
+      "src": "/root/folder6",
       "accountsWithPermission": ["klock", "pellebos"],
       "children": [
         {
           "name": "folder7",
-          "src": "/path/path/path",
+          "src": "/root/folder6/folder7",
           "accountsWithPermisson": ["klock", "pellebos"],
           "children": [
             {
               "name": "folder8",
-              "src": "/path/path/path",
+              "src": "/root/folder6/folder7/folder8",
               "accountsWithPermission": ["klock"]
             }
           ]
