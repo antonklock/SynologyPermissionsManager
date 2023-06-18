@@ -1,0 +1,53 @@
+{
+  "name": "root",
+  "children": [
+    {
+      "name": "folder1",
+      "src": "/path/path/path",
+      "accountsWithPermission": ["klock"],
+      "children": [
+        {
+          "name": "folder2",
+          "src": "/path/path/path",
+          "accountsWithPermission": ["klock"],
+          "children": [
+            {
+              "name": "folder3",
+              "src": "/path/path/path",
+              "accountsWithPermission": ["klock"]
+            }
+          ]
+        },
+        {
+          "name": "folder4",
+          "src": "/path/path/path",
+          "accountsWithPermission": ["klock", "pellebos", "klocken"],
+          "children": {
+            "name": "folder5",
+            "src": "/path/path/path",
+            "accountsWithPermission": ["klock", "pellebos", "klocken"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "folder6",
+      "src": "/path/path/path",
+      "accountsWithPermission": ["klock", "pellebos"],
+      "children": [
+        {
+          "name": "folder7",
+          "src": "/path/path/path",
+          "accountsWithPermisson": ["klock", "pellebos"],
+          "children": [
+            {
+              "name": "folder8",
+              "src": "/path/path/path",
+              "accountsWithPermission": ["klock"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -32,12 +32,12 @@
   let users: user[] = [klock, klocken, pellebos];
 </script>
 
-<div class="container">
-  <h1>Permissions</h1>
+<div class="flex flex-col justify-center">
+  <h1 class={"text-4xl font-bold"}>Permissions</h1>
   <p>Here are all the permissions</p>
 
   <div class="column">
-    <p>User</p>
+    <p>Users</p>
     <ul>
       {#each users as user}
         <User
@@ -50,11 +50,3 @@
     </ul>
   </div>
 </div>
-
-<style>
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-</style>

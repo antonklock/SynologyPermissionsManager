@@ -1,4 +1,6 @@
 <script lang="ts">
+  import ExpandButton from "../../navigation/ExpandButton.svelte";
+
   export let name: String;
   let permissionForAllChildren: boolean = true;
   let optionsOpen: boolean = false;
@@ -13,33 +15,27 @@
   };
 </script>
 
-<div class="permission">
-  <button on:click={toggleExpanded}>Show subfolders</button>
-  <button>Remove</button>
-  <p>{name}</p>
-  {#if optionsOpen}
-    <button on:click={toggleOptions}>Close</button>
-    <form>
-      <input
-        type="checkbox"
-        id="permissionsForAllChildren"
-        checked={permissionForAllChildren}
-        on:change={() => {
-          permissionForAllChildren = !permissionForAllChildren;
-        }}
-      />
-      <label for="permissionsForAllChildren">Include all children</label>
-    </form>
-  {:else}
-    <button on:click={toggleOptions}>Options</button>
-  {/if}
-</div>
+<div class="flex flex-row justify-start align-center">
+  <img class="w-4" src="/close-symbol.svg" alt="remove permission" />
+  <div class="ml-10 flex flex-row justify-start align-center">
+    <ExpandButton {expanded} />
 
-<style>
-  .permission {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-</style>
+    <p>{name}</p>
+    {#if optionsOpen}
+      <button class="btn" on:click={toggleOptions}>Close</button>
+      <form>
+        <input
+          type="checkbox"
+          id="permissionsForAllChildren"
+          checked={permissionForAllChildren}
+          on:change={() => {
+            permissionForAllChildren = !permissionForAllChildren;
+          }}
+        />
+        <label for="permissionsForAllChildren">Include all children</label>
+      </form>
+    {:else}
+      <img class="w-4" src="/pen-symbol.svg" alt="edit permission" />
+    {/if}
+  </div>
+</div>

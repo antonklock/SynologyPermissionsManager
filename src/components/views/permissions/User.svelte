@@ -1,5 +1,7 @@
 <script lang="ts">
+  import ExpandButton from "../../navigation/ExpandButton.svelte";
   import Permission from "./Permission.svelte";
+  import folderTree from "../../../data/folderTree.json";
 
   export let name: String;
   export let email: string;
@@ -14,42 +16,55 @@
     isExpanded = !isExpanded;
   };
 
-  const toggleShowOptions = () => {
-    showOptions = !showOptions;
-  };
-
   const toggleShowInfo = () => {
     showInfo = !showInfo;
   };
+
+  const getFoldersWithPermission = () => {};
 </script>
 
 <div>
   {#if isExpanded}
-    <div class="user-info">
-      <button on:click={toggleExpand}>Collapse</button>
-      <p>{name}</p>
-      <button on:click={toggleShowInfo}>Show info</button>
+    <div
+      class="flex flex-row justify-start items-center bg-slate-800"
+      on:click={toggleExpand}
+      on:keydown={toggleExpand}
+    >
+      <ExpandButton expanded={isExpanded} />
+      <p class="mr-2 cursor-default">{name}</p>
+      <img
+        class="w-4"
+        src="/info.svg"
+        alt="info"
+        on:click={toggleShowInfo}
+        on:keydown={toggleShowInfo}
+      />
     </div>
     <div>
       {#each permissions as permission}
         <Permission name={permission} />
       {/each}
-      <button>Add permission</button>
+      <div class="flex flex-row">
+        <img class="w-4" src="/add-symbol.svg" alt="add permission" />
+        <p class="ml-1">Add permission</p>
+      </div>
     </div>
   {:else}
-    <div class="user-info">
-      <button on:click={toggleExpand}>Expand</button>
-      <p>{name}</p>
-      <button on:click={toggleShowInfo}>Show info</button>
+    <div
+      class="flex flex-row justify-start items-center hover:bg-slate-800"
+      on:click={toggleExpand}
+      on:keydown={toggleExpand}
+    >
+      <ExpandButton expanded={isExpanded} />
+      <p class="mr-2 cursor-default">{name}</p>
+
+      <img
+        class="w-4"
+        src="/info.svg"
+        alt="info"
+        on:click={toggleShowInfo}
+        on:keydown={toggleShowInfo}
+      />
     </div>
   {/if}
 </div>
-
-<style>
-  .user-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-</style>
