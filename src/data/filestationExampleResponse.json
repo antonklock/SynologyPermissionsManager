@@ -1,0 +1,46 @@
+{
+  "shares": [
+    {
+      "isdir": true,
+      "name": "video",
+      "path": "/video",
+      "additional": {
+        "owner": {
+          "gid": 100,
+          "group": "users",
+          "uid": 1024,
+          "user": "admin"
+        },
+        "real_path": "/volume1/video",
+        "time": {
+          "atime": 1374918626,
+          "crtime": 1363259974,
+          "ctime": 1371713685,
+          "mtime": 1371713685
+        }
+      }
+    },
+    {
+      "isdir": true,
+      "name": "photo",
+      "path": "/photo",
+      "additional": {
+        "owner": {
+          "gid": 100,
+          "group": "users",
+          "uid": 1024,
+          "user": "admin"
+        },
+        "real_path": "/volume1/photo",
+        "time": {
+          "atime": 1371630215,
+          "crtime": 1352168821,
+          "ctime": 1368769689,
+          "mtime": 1368769689
+        }
+      }
+    }
+  ],
+  "offset": 0,
+  "total": 2
+}

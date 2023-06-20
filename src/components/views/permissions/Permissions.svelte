@@ -1,6 +1,11 @@
 <script lang="ts">
   import User from "./User.svelte";
   import folderTree from "../../../data/folderTree.json";
+  import {
+    GetAmountOfFolders,
+    GetFolders,
+  } from "../../../util/fsResponseHandler";
+  import FilestationExample from "../../../data/filestationExampleResponse.json";
 
   type user = {
     name: string;
@@ -43,14 +48,6 @@
     let folders = getChildrenInFolder(folderTree);
     console.log("getAllUsersWithPermissions");
     console.log(getAllUsersWithPermissions(folders));
-
-    // for (let folder in folderTree) {
-    //   // folder.forEach((child) => {
-    //   //   if (child.permissions.includes(name)) {
-    //   //     accessableFolders.push(child.name);
-    //   //   }
-    //   // });
-    // }
   };
 
   const getAllUsersWithPermissions = (folders) => {
@@ -95,6 +92,12 @@
 <div class="flex flex-col justify-center">
   <h1 class={"text-4xl font-bold"}>Permissions</h1>
   <p>Here are all the permissions</p>
+  <button
+    class="btn"
+    on:click={() => console.log(GetFolders(FilestationExample))}
+  >
+    Get amount of folders
+  </button>
 
   <div class="column">
     <p>Users</p>
