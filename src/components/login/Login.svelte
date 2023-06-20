@@ -184,29 +184,29 @@
   };
 </script>
 
-<div class="container">
+<div class="flex flex-col items-center">
   {#if authenticated == false && enterOtp == false}
     <h1>Login</h1>
     {#if loginFailed == true}
       <p style={"text-color: red"}>Login failed. Please try again.</p>
     {/if}
-    <form class="form">
+    <form class="flex flex-col items-center">
       <input
+        class="input input-bordered w-full max-w-xs"
         type="text"
         name="username"
         placeholder="username"
         bind:value={username}
       />
       <input
+        class="input input-bordered w-full max-w-xs"
         type="password"
         name="password"
         placeholder="password"
         bind:value={password}
       />
     </form>
-    <button class={"loginButton"} on:click={() => setEnterOtp(true)}
-      >Next</button
-    >
+    <button class={"btn"} on:click={() => setEnterOtp(true)}>Next</button>
   {:else if authenticated == true && loginFailed == false}
     <h1>Logout</h1>
     <button on:click={handleLogout}>Logout</button>
@@ -230,16 +230,13 @@
 </div>
 
 <style>
-  .form {
+  /* .form {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   .form input {
     margin-bottom: 0.5rem;
-  }
-  .loginButton {
-    width: 20%;
   }
   .container {
     display: flex;
@@ -248,5 +245,5 @@
   }
   button {
     min-width: 8rem;
-  }
+  } */
 </style>

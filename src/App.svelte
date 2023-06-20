@@ -3,7 +3,7 @@
   import Login from "./components/login/Login.svelte";
   import Permissions from "./components/views/permissions/Permissions.svelte";
 
-  let isLoggedIn = true;
+  let isLoggedIn = false;
 </script>
 
 <main class="container">
